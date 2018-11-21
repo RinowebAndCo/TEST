@@ -1,0 +1,194 @@
+﻿@charset 'utf-8';
+
+/************************************************************************************/
+/* #region BreakPoint */
+/************************************************************************************/
+
+//Use : @include device{}
+
+@mixin device {
+    @media (max-height : 850px) and (max-width:450px) and (orientation: portrait), (max-width : 850px) and (max-height:450px) and (orientation: landscape) {
+        @content;
+    }
+}
+
+/************************************************************************************/
+/* #endregion */
+/************************************************************************************/
+
+/************************************************************************************/
+/* #region Variable */
+/************************************************************************************/
+$background-color: hsl(245, 9%, 95%);
+$menu-color: hsl(212, 24%, 31%);
+$evidence-color: hsl(228, 79%, 70%);
+$black50: rgba(0, 0, 0, 0.5);
+
+$heightNav: 56px;
+/************************************************************************************/
+/* #endregion */
+/************************************************************************************/
+
+/************************************************************************************/
+/* #region Function */
+/************************************************************************************/
+
+@function mixW($color, $percentage) {
+    @return mix(white, $color, $percentage);
+}
+
+@function mixB($color, $percentage) {
+    @return mix(black, $color, $percentage);
+}
+
+/************************************************************************************/
+/* #endregion */
+/************************************************************************************/
+
+
+/************************************************************************************/
+/* #region ID Graphique */
+/************************************************************************************/
+body {
+    background: $background-color;
+}
+
+.navbar {
+    background: $menu-color;
+}
+
+section h2 {
+    background: $evidence-color;
+}
+
+section > :last-child {
+    background: mixW($evidence-color,25%);
+}
+
+.navbar-nav {
+    & .nav-link {
+        color: $background-color;
+
+        &.active, &:hover {
+            color: $evidence-color;
+        }
+    }
+}
+
+/************************************************************************************/
+/* #endregion */
+/************************************************************************************/
+
+/************************************************************************************/
+/* #region Utilities */
+/************************************************************************************/
+@mixin affix-top($offset) {
+    position: -webkit-sticky;
+    position: sticky;
+    top: $offset;
+}
+
+@mixin affix-bottom($value) {
+    position: -webkit-sticky;
+    position: sticky;
+    top: calc(100vh - #{$value});
+}
+
+.affix-top {
+    @include affix-top($heightNav);
+
+    &-main {
+        @include affix-top(0px);
+        z-index: 1000;
+    }
+}
+
+/************************************************************************************/
+/* #endregion */
+/************************************************************************************/
+.carousel-caption {
+    right: 35%;
+    left: 35%;
+    background: $black50;
+
+    @include device {
+        bottom: 5px;
+        right: 30%;
+        left: 30%;
+    }
+
+    & > h3 {
+        @include device {
+            font-size: 15px;
+        }
+    }
+
+    & > p {
+        @include device {
+            font-size:11px;
+        }
+    }
+}
+
+.carousel-indicators {
+    @include device {
+        bottom: 5px;
+    }
+}
+#modalImg .modal-dialog{
+    max-width:90%;
+}
+.navbar, .navbar-brand {
+    height: $heightNav;
+}
+
+.navbar-nav {
+    & .nav-link {
+        color: $background-color;
+
+        &.active, &:hover {
+            color: $evidence-color;
+        }
+    }
+
+    @include device {
+        -ms-flex-direction: row !important;
+        flex-direction: row !important;
+
+        & .nav-link {
+            padding-right: .5rem !important;
+            padding-left: .5rem !important;
+        }
+    }
+}
+
+.navbar-brand > img {
+    height: inherit;
+    padding: 5px;
+    position: relative;
+    top: -5px;
+    border-radius: 0.75rem;
+}
+
+section {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100vh;
+}
+
+section > h2 {
+    width: 100vw;
+    color: #FFF;
+    margin: 0;
+
+    @include affix-top($heightNav);
+}
+
+section > :last-child {
+    height: 100px;
+    width: 100vw;
+    color: #FFF;
+    margin: 0;
+    padding: 2px 0 0 12px;
+    @include affix-bottom(100px);
+}
